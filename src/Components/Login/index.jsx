@@ -103,6 +103,7 @@ function Login() {
             type: "error",
           });
         } else {
+          const { token } = data;
           setOpen(true);
           setError({
             msg: "Login Success",
