@@ -103,6 +103,8 @@ function Login() {
             type: "error",
           });
         } else {
+          const { token } = data;
+          localStorage.setItem("token", token);
           setOpen(true);
           setError({
             msg: "Login Success",
