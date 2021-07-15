@@ -87,9 +87,10 @@ function Login() {
       "Content-type": "application/json",
     };
     fetch(
-      `https://cors-anywhere.herokuapp.com/https://api.chime.me/token?account=${email}&password=${password}&vendorKey=9ce64853f64f456ca348397666974b0b`,
+      `https://cors.bridged.cc/https://api.chime.me/token?account=${email}&password=${password}&vendorKey=9ce64853f64f456ca348397666974b0b`,
       {
         method: "GET",
+        headers: headersList,
       }
     )
       .then(function (response) {
