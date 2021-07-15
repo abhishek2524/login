@@ -113,10 +113,10 @@ function Login() {
         }
       })
       .catch((err) => {
-        console.log("er>>>>>>..", err);
+        console.log("error:", err);
         setOpen(true);
         setError({
-          msg: "Invalid Credentials",
+          msg: "Server Error",
           type: "error",
         });
       });
