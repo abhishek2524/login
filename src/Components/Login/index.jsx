@@ -84,25 +84,32 @@ function Login() {
   const onSubmit = async (values, abc) => {
     const { email, password } = values;
     let headersList = {
-      "Content-type": "application/json; charset=UTF-8"
+      "Content-type": "application/json",
     };
     fetch(
-      `https://api.chime.me/token?account=${email}&password=${password}&vendorKey=9ce64853f64f456ca348397666974b0b`,
+      `https://cors-anywhere.herokuapp.com/https://api.chime.me/token?account=${email}&password=${password}&vendorKey=9ce64853f64f456ca348397666974b0b`,
       {
         method: "GET",
-        headers: headersList,
-        mode:"no-cors"
       }
     )
       .then(function (response) {
         return response.json();
-        // setOpen(true);
-        // setError({
-        //   msg: "Login Success",
-        //   type: "success",
-        // });
       })
-      .then((data) => console.log(">>>>>>>>>>>>>>>", data))
+      .then((data) => {
+        if (data.message) {
+          setOpen(true);
+          setError({
+            msg: data.message,
+            type: "error",
+          });
+        } else {
+          setOpen(true);
+          setError({
+            msg: "Login Success",
+            type: "success",
+          });
+        }
+      })
       .catch((err) => {
         console.log("er>>>>>>..", err);
         setOpen(true);
@@ -111,51 +118,6 @@ function Login() {
           type: "error",
         });
       });
-    // try {
-    //   const response = await fetch(
-    //     "https://api.chime.me/token?account=rpaugh@homeswiper.com&password=Meatsweats78759&vendorKey=9ce64853f64f456ca348397666974b0b",
-    //     {
-    //       method: "GET",
-    //       mode: "no-cors",
-    //       headers: {
-    //         "content-type": "application/json",
-    //       },
-    //     }
-    //   );
-    //   console.log("respo>>>>>>>>>>", response);
-    //   const data = await response.json();
-    //   console.log("data>>>>>>>>>>>", data);
-    // } catch (error) {
-    //   console.log("err>>>>>>>>>", error);
-    // }
-
-    //   .then((resp) => {
-    //     console.log(resp);
-    //   })
-    //   .catch((err) => console.log(err));
-    // let headersList = {
-    //   Accept: "*/*",
-    //   "User-Agent": "Thunder Client (https://www.thunderclient.io)",
-    //   Authorization:
-    //     "token eyJhbGciOiJIUzI1NiJ9.eyJleHQiOjMxNDgxNDkwMTE3OTEsInVzZXJfaWQiOjMzMDMyNDE0OTQwMzgwMCwic2NvcGUiOiI1IiwiaWF0IjoxNTcxMzQ5MDExNzkxfQ.9YKgQBhy9q1cE8EgEUAWNGAvZrN8GcWDGRwiF5VMsJM",
-    //   "Content-Type": "application/json",
-    //   "Content-Type": "application/x-www-form-urlencoded",
-    // };
-
-    // fetch(
-    //   "https://api.chime.me/v1.0/sso-token/url?sso-token=416B126203754A2992CE1C9963A50BF0&redirect-url=%5B%5Bhttps://chime.me/admin/home%5D%5D&businessType=Brokermint",
-    //   {
-    //     method: "GET",
-    //     mode: "no-cors",
-    //     headers: headersList,
-    //   }
-    // )
-    //   .then(function (response) {
-    //     return response.text();
-    //   })
-    //   .then(function (data) {
-    //     console.log(data);
-    //   });
   };
   return (
     <Grid container component="main" className={classes.root}>
