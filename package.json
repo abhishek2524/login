@@ -44,5 +44,8 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://api.chime.me"
+  "engines": {
+    "npm": "6.14.13",
+    "node": "14.17.0"
+  }
 }
