@@ -86,8 +86,7 @@ function Login() {
     const { email, password } = values;
     console.log(abc);
     let headersList = {
-      "Content-Type": "application/json",
-      // "Content-Type": "text/html; charset=UTF-8",
+      "Content-type": "application/json; charset=UTF-8",
     };
     fetch(
       `https://api.chime.me/token?account=${email}&password=${password}&vendorKey=9ce64853f64f456ca348397666974b0b`,
