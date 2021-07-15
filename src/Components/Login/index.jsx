@@ -86,27 +86,28 @@ function Login() {
     const { email, password } = values;
     console.log(abc);
     let headersList = {
-      Accept: "application/json",
       "Content-Type": "application/json",
+      // "Content-Type": "text/html; charset=UTF-8",
     };
-
     fetch(
       `https://api.chime.me/token?account=${email}&password=${password}&vendorKey=9ce64853f64f456ca348397666974b0b`,
       {
         method: "GET",
         headers: headersList,
-        mode: "no-cors",
+        // mode: "no-cors",
       }
     )
       .then(function (response) {
-        console.log("response>>>>>>>", response);
-        setOpen(true);
-        setError({
-          msg: "Login Success",
-          type: "success",
-        });
+        return response.json();
+        // setOpen(true);
+        // setError({
+        //   msg: "Login Success",
+        //   type: "success",
+        // });
       })
+      .then((data) => console.log(">>>>>>>>>>>>>>>", data))
       .catch((err) => {
+        console.log("er>>>>>>..", err);
         setOpen(true);
         setError({
           msg: "Invalid Credentials",
