@@ -50,11 +50,22 @@ const useStyles = makeStyles((theme) => ({
   error: {
     color: "red",
   },
+  tokenDiv: {
+    overflowWrap: "anywhere",
+    padding: "40px",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    height: "100%",
+  },
 }));
 
 function Login() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const [token, setToken] = React.useState("");
   const [error, setError] = React.useState({
     msg: "",
     type: "error",
@@ -104,8 +115,8 @@ function Login() {
             type: "error",
           });
         } else {
-          const { token } = data;
-          localStorage.setItem("token", token);
+          setToken(data.token);
+          sessionStorage.setItem("token", data.token);
           setOpen(true);
           setError({
             msg: "Login Success",
@@ -137,67 +148,74 @@ function Login() {
       <CssBaseline />
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
-          </Typography>
-          <Formik
-            initialValues={initialValues}
-            validationSchema={loginSchema}
-            onSubmit={onSubmit}
-          >
-            {(formikprops) => (
-              <Form className={classes.form} noValidate>
-                <Field
-                  as={TextField}
-                  variant="outlined"
-                  margin="normal"
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                  autoFocus
-                  required
-                  helperText={
-                    <div className={classes.error}>
-                      <ErrorMessage name="email" />
-                    </div>
-                  }
-                />
-                <Field
-                  as={TextField}
-                  variant="outlined"
-                  margin="normal"
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="current-password"
-                  required
-                  helperText={
-                    <div className={classes.error}>
-                      <ErrorMessage name="password" />
-                    </div>
-                  }
-                />
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  color="primary"
-                  className={classes.submit}
-                >
-                  Sign In
-                </Button>
-              </Form>
-            )}
-          </Formik>
-        </div>
+        {token ? (
+          <div className={(classes.paper, classes.tokenDiv)}>
+            <h1>Your Token</h1>
+            {token}
+          </div>
+        ) : (
+          <div className={classes.paper}>
+            <Avatar className={classes.avatar}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Sign in
+            </Typography>
+            <Formik
+              initialValues={initialValues}
+              validationSchema={loginSchema}
+              onSubmit={onSubmit}
+            >
+              {(formikprops) => (
+                <Form className={classes.form} noValidate>
+                  <Field
+                    as={TextField}
+                    variant="outlined"
+                    margin="normal"
+                    fullWidth
+                    id="email"
+                    label="Email Address"
+                    name="email"
+                    autoComplete="email"
+                    autoFocus
+                    required
+                    helperText={
+                      <div className={classes.error}>
+                        <ErrorMessage name="email" />
+                      </div>
+                    }
+                  />
+                  <Field
+                    as={TextField}
+                    variant="outlined"
+                    margin="normal"
+                    fullWidth
+                    name="password"
+                    label="Password"
+                    type="password"
+                    id="password"
+                    autoComplete="current-password"
+                    required
+                    helperText={
+                      <div className={classes.error}>
+                        <ErrorMessage name="password" />
+                      </div>
+                    }
+                  />
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                  >
+                    Sign In
+                  </Button>
+                </Form>
+              )}
+            </Formik>
+          </div>
+        )}{" "}
       </Grid>
     </Grid>
   );
